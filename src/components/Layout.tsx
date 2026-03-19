@@ -1,5 +1,5 @@
 import weddingTitleImg from "../assets/Imagem.png";
-import video from "../assets/viideo.mp4";
+const video = "https://res.cloudinary.com/dlf3r15qa/video/upload/v1773960348/viideo_tagvjx.mp4";
 
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";

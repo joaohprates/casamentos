@@ -128,7 +128,7 @@ function PixPayment({ gift }: { gift: Gift }) {
     setError(null);
     setPix(null);
 
-    fetch("http://localhost:3001/api/pix", {
+    fetch("/api/pix", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

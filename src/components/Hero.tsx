@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import video from "../assets/viideo.mp4";
+const video = "https://res.cloudinary.com/dlf3r15qa/video/upload/v1773960348/viideo_tagvjx.mp4";
 
 function Hero() {
   return (
