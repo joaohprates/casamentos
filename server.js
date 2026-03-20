@@ -39,7 +39,7 @@ app.post("/api/pix", async (req, res) => {
             ],
           },
           payer: {
-            email: "convidado@testuser.com",
+            email: "convidado@casamento.com",
           },
         }),
       }
