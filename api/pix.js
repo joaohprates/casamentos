@@ -33,7 +33,7 @@ export default async function handler(req, res) {
             ],
           },
           payer: {
-            email: "convidado@convidado.com",
+            email: "convidado@testuser.com",
           },
         }),
       }
