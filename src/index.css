@@ -54,9 +54,8 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0;;
+  padding: 0;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -150,6 +149,8 @@ code {
   align-items: center;
 
   text-align: center;
+  padding: 24px 0 40px;
+  box-sizing: border-box;
 }
 .section-container {
   min-height: 400px;

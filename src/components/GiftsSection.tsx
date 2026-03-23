@@ -96,17 +96,17 @@ function GiftCard({ gift, onSelect }: { gift: Gift; onSelect: () => void }) {
             justifyContent: "center",
             gap: 1,
             py: 1.2,
-            border: `1px solid ${palette.accent}`,
+            border: "1px solid #43a047",
             borderRadius: 2,
-            backgroundColor: palette.btnBg,
-            color: palette.accent,
+            backgroundColor: "rgba(67,160,71,0.18)",
+            color: "#7ef08b",
             cursor: "pointer",
             fontSize: "0.85rem",
             fontWeight: 600,
             letterSpacing: 1,
             textTransform: "uppercase",
             transition: "all 0.25s ease",
-            "&:hover": { backgroundColor: palette.btnBgHover },
+            "&:hover": { backgroundColor: "rgba(67,160,71,0.3)" },
           }}
         >
           <CardGiftcardRoundedIcon sx={{ fontSize: 18 }} />

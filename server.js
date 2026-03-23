@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import { validateToken, saveRsvpToSheet } from "./googleSheets.js";
 
 const app = express();
 app.use(cors());
@@ -61,6 +62,66 @@ app.post("/api/pix", async (req, res) => {
   } catch (err) {
     console.error("MercadoPago error:", err);
     res.status(500).json({ error: "Erro ao gerar cobrança Pix" });
+  }
+});
+
+app.get("/api/validate-token", async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.status(400).json({ error: "Token é obrigatório" });
+  }
+
+  try {
+    const result = await validateToken(token);
+
+    if (!result.valid) {
+      if (result.reason === "already_used") {
+        return res.status(409).json({ error: "Este convite já foi confirmado" });
+      }
+      return res.status(404).json({ error: "Convite não encontrado" });
+    }
+
+    res.json({ familia: result.familia, adultos: result.adultos });
+  } catch (err) {
+    console.error("Validate token error:", err);
+    res.status(500).json({ error: "Erro ao validar convite" });
+  }
+});
+
+app.post("/api/rsvp", async (req, res) => {
+  const { token, name, email, criancas } = req.body;
+
+  if (!token || !name || !email) {
+    return res.status(400).json({ error: "Token, nome e e-mail são obrigatórios" });
+  }
+
+  if (!email.includes("@")) {
+    return res.status(400).json({ error: "E-mail inválido" });
+  }
+
+  try {
+    const tokenResult = await validateToken(token);
+
+    if (!tokenResult.valid) {
+      if (tokenResult.reason === "already_used") {
+        return res.status(409).json({ error: "Este convite já foi confirmado" });
+      }
+      return res.status(404).json({ error: "Convite não encontrado" });
+    }
+
+    const saved = await saveRsvpToSheet({
+      token,
+      name,
+      email,
+      adultos: tokenResult.adultos,
+      criancas: Math.max(0, parseInt(criancas, 10) || 0),
+    });
+
+    res.json({ success: true, saved });
+  } catch (err) {
+    console.error("RSVP error:", err);
+    res.status(500).json({ error: "Erro ao salvar confirmação" });
   }
 });
 

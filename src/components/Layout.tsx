@@ -5,13 +5,18 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CardGiftcardRoundedIcon from "@mui/icons-material/CardGiftcardRounded";
+import HowToRegRoundedIcon from "@mui/icons-material/HowToRegRounded";
 
 import GiftsSection from "./GiftsSection";
 import InfoSection from "./InfoSection";
+import RSVPSection from "./RSVPSection";
 import palette from "../palette";
 
 export function Layout() {
-  const [tipo, setTipo] = useState<"presente" | "info" | null>(null);
+  const [tipo, setTipo] = useState<"presente" | "info" | "rsvp" | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("token") ? "rsvp" : null;
+  });
   return (
     <Box className="layout-root">
 
@@ -26,20 +31,28 @@ export function Layout() {
         <img
           src={weddingTitleImg}
           alt="Wedding"
-          style={{ maxWidth: 320 }}
+          style={{ width: "min(320px, 80vw)" }}
         />
 
         <Typography
           variant="h6"
-          sx={{ color: "white", mt: 2 }}
+          sx={{ color: "white", mt: 2, fontSize: { xs: "1rem", sm: "1.25rem" } }}
         >
           8 Nov • Allan'De • Maringá
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
+        <Box sx={{
+          display: "flex",
+          gap: { xs: 1.5, sm: 2 },
+          mt: 4,
+          flexWrap: "wrap",
+          justifyContent: "center",
+          px: { xs: 2, sm: 0 },
+        }}>
           {[
             { key: "info" as const, label: "Informações", icon: <InfoOutlinedIcon sx={{ fontSize: 22 }} /> },
             { key: "presente" as const, label: "Presentes", icon: <CardGiftcardRoundedIcon sx={{ fontSize: 22 }} /> },
+            { key: "rsvp" as const, label: "Confirmar Presença", icon: <HowToRegRoundedIcon sx={{ fontSize: 22 }} /> },
           ].map(({ key, label, icon }) => {
             const active = tipo === key;
             return (
@@ -50,7 +63,7 @@ export function Layout() {
                   display: "flex",
                   alignItems: "center",
                   gap: 1,
-                  px: 3,
+                  px: { xs: 1.5, sm: 3 },
                   py: 1.4,
                   borderRadius: "50px",
                   cursor: "pointer",
@@ -74,9 +87,9 @@ export function Layout() {
                 {icon}
                 <Typography
                   sx={{
-                    fontSize: "0.88rem",
+                    fontSize: { xs: "0.78rem", sm: "0.88rem" },
                     fontWeight: 500,
-                    letterSpacing: 1.5,
+                    letterSpacing: { xs: 1, sm: 1.5 },
                     textTransform: "uppercase",
                   }}
                 >
@@ -87,12 +100,16 @@ export function Layout() {
           })}
         </Box>
 
-        <div style={{ display: tipo === "info" ? "block" : "none" }}>
+        <div style={{ display: tipo === "info" ? "block" : "none", width: "100%" }}>
           <InfoSection />
         </div>
 
-        <div style={{ display: tipo === "presente" ? "block" : "none" }}>
+        <div style={{ display: tipo === "presente" ? "block" : "none", width: "100%" }}>
           <GiftsSection />
+        </div>
+
+        <div style={{ display: tipo === "rsvp" ? "block" : "none", width: "100%" }}>
+          <RSVPSection />
         </div>
       </Box>
     </Box>
