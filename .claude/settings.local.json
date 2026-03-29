@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:3001/api/pix)",
+      "Bash(netstat -ano)",
+      "Bash(curl:*)",
+      "Bash(tasklist)",
+      "Bash(wmic process:*)",
+      "Bash(kill 8804)",
+      "Bash(taskkill /PID 8804 /F)",
+      "Bash(cmd /c \"taskkill /PID 8804 /F\")",
+      "Bash(node -e \":*)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(powershell -Command \"Stop-Process -Id 8804 -Force\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3001 -State Listen | Select-Object -ExpandProperty OwningProcess | ForEach-Object { Stop-Process -Id $_-Force }\")",
+      "Bash(xargs -I{} powershell -Command \"Stop-Process -Id {} -Force\")",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3001 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | Where-Object { $_-gt 0 } | ForEach-Object { Stop-Process -Id $_-Force -ErrorAction SilentlyContinue }\")",
+      "Bash(git add:*)"
+    ]
+  }
+}
