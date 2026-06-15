@@ -8,6 +8,7 @@ import {
   DialogContent,
   IconButton,
   CircularProgress,
+  Portal,
 } from "@mui/material";
 import CardGiftcardRoundedIcon from "@mui/icons-material/CardGiftcardRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -17,9 +18,6 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import RedeemRoundedIcon from "@mui/icons-material/RedeemRounded";
-import StorefrontRoundedIcon from "@mui/icons-material/StorefrontRounded";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import palette from "../palette";
 
 const HAVAN_LISTA_URL = "https://lista.havan.com.br/Convidado/ItensListaPresente/940928";
@@ -477,81 +475,15 @@ function BoletoPayment({ gift }: { gift: Gift }) {
   );
 }
 
-function CategoryButton({
-  icon,
-  title,
-  subtitle,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-  onClick: () => void;
-}) {
-  return (
-    <Box
-      onClick={onClick}
-      sx={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        gap: 1,
-        position: "relative",
-        px: 3,
-        py: { xs: 4, sm: 5 },
-        backgroundColor: "rgba(255, 248, 236, 0.62)",
-        border: `1px solid ${palette.border}`,
-        borderRadius: 4,
-        color: palette.brown,
-        cursor: "pointer",
-        userSelect: "none",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          backgroundColor: "rgba(255, 248, 236, 0.88)",
-          transform: "translateY(-4px)",
-          boxShadow: "0 14px 36px rgba(64,49,50,0.12)",
-          borderColor: palette.borderActive,
-        },
-      }}
-    >
-      <Box sx={{ color: palette.olive, display: "flex" }}>{icon}</Box>
-      <Typography
-        component="h2"
-        sx={{
-          fontFamily: "var(--font-script)",
-          fontSize: { xs: "1.7rem", sm: "2.1rem" },
-          lineHeight: 1.1,
-          fontWeight: 400,
-          color: palette.brown,
-        }}
-      >
-        {title}
-      </Typography>
-      <Typography
-        sx={{
-          fontFamily: "var(--font-slab)",
-          fontSize: "0.72rem",
-          letterSpacing: 2.5,
-          textTransform: "uppercase",
-          color: palette.sage,
-        }}
-      >
-        {subtitle}
-      </Typography>
-      <ChevronRightRoundedIcon
-        sx={{ position: "absolute", right: 14, top: "50%", mt: "-12px", fontSize: 24, color: palette.textSubtle }}
-      />
-    </Box>
-  );
-}
-
-function GiftsSection() {
+function GiftsSection({ active, onExit }: { active: boolean; onExit: () => void }) {
   const [category, setCategory] = useState<"emocionais" | null>(null);
   const [selected, setSelected] = useState<Gift | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
+
+  // Sempre que a aba "Presentes" é aberta, volta para a tela de escolha.
+  useEffect(() => {
+    if (active) setCategory(null);
+  }, [active]);
 
   const handleClose = () => {
     setSelected(null);
@@ -560,40 +492,131 @@ function GiftsSection() {
 
   const currentOption = paymentOptions.find((o) => o.id === paymentMethod);
 
-  // Tela de escolha (mobile-first): dois botões empilhados ocupando a tela.
+  // Tela de escolha — ocupa a tela inteira (portal pra escapar dos contêineres
+  // com transform). Duas metades iguais divididas por uma linha, com "ou" no meio.
   if (category === null) {
+    if (!active) return null;
     return (
-      <Box
-        sx={{
-          maxWidth: 640,
-          mx: "auto",
-          mt: { xs: 2.5, sm: 4 },
-          mb: 4,
-          width: "100%",
-          minHeight: { xs: "62svh", sm: "58svh" },
-          display: "flex",
-          flexDirection: "column",
-          gap: { xs: 2, sm: 2.5 },
-          animation: "fadeSlideUp 0.6s ease-out",
-          "@keyframes fadeSlideUp": {
-            from: { opacity: 0, transform: "translateY(24px)" },
-            to: { opacity: 1, transform: "translateY(0)" },
-          },
-        }}
-      >
-        <CategoryButton
-          icon={<StorefrontRoundedIcon sx={{ fontSize: 40 }} />}
-          title="Presentes Físicos"
-          subtitle="Lista na Havan"
-          onClick={() => window.open(HAVAN_LISTA_URL, "_blank", "noopener,noreferrer")}
-        />
-        <CategoryButton
-          icon={<FavoriteRoundedIcon sx={{ fontSize: 40 }} />}
-          title="Presentes Emocionais"
-          subtitle="Nossa lista especial"
-          onClick={() => setCategory("emocionais")}
-        />
-      </Box>
+      <Portal>
+        <Box
+          sx={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 1200,
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "rgba(255, 248, 236, 0.94)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            animation: "fadeIn 0.4s ease-out",
+            "@keyframes fadeIn": { from: { opacity: 0 }, to: { opacity: 1 } },
+          }}
+        >
+          <IconButton
+            onClick={onExit}
+            aria-label="Fechar"
+            sx={{ position: "absolute", top: 10, right: 10, zIndex: 2, color: palette.textMuted }}
+          >
+            <CloseRoundedIcon />
+          </IconButton>
+
+          {/* Metade de cima — Presentes Físicos */}
+          <Box
+            onClick={() => window.open(HAVAN_LISTA_URL, "_blank", "noopener,noreferrer")}
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              gap: 1,
+              px: 4,
+              cursor: "pointer",
+              userSelect: "none",
+              transition: "background-color 0.25s ease",
+              "&:hover": { backgroundColor: "rgba(117,113,78,0.07)" },
+              "&:active": { backgroundColor: "rgba(117,113,78,0.12)" },
+            }}
+          >
+            <Typography
+              component="h2"
+              sx={{
+                fontFamily: "var(--font-script)",
+                color: palette.brown,
+                fontSize: { xs: "2.4rem", sm: "3.2rem" },
+                lineHeight: 1.05,
+                fontWeight: 400,
+              }}
+            >
+              Presentes físicos
+            </Typography>
+            <Typography sx={{ fontFamily: "var(--font-slab)", fontSize: "0.72rem", letterSpacing: 2.5, textTransform: "uppercase", color: palette.sage }}>
+              Lista na Havan
+            </Typography>
+          </Box>
+
+          {/* Divisor com "ou" — indica que é uma escolha entre um ou outro */}
+          <Box sx={{ position: "relative", height: 0, borderTop: `1px solid ${palette.border}` }}>
+            <Box
+              sx={{
+                position: "absolute",
+                left: "50%",
+                top: 0,
+                transform: "translate(-50%, -50%)",
+                px: 1.5,
+                py: 0.4,
+                borderRadius: "999px",
+                border: `1px solid ${palette.border}`,
+                backgroundColor: palette.cream,
+                fontFamily: "var(--font-slab)",
+                fontSize: "0.7rem",
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                color: palette.textMuted,
+              }}
+            >
+              ou
+            </Box>
+          </Box>
+
+          {/* Metade de baixo — Presentes Emocionais */}
+          <Box
+            onClick={() => setCategory("emocionais")}
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              gap: 1,
+              px: 4,
+              cursor: "pointer",
+              userSelect: "none",
+              transition: "background-color 0.25s ease",
+              "&:hover": { backgroundColor: "rgba(117,113,78,0.07)" },
+              "&:active": { backgroundColor: "rgba(117,113,78,0.12)" },
+            }}
+          >
+            <Typography
+              component="h2"
+              sx={{
+                fontFamily: "var(--font-script)",
+                color: palette.brown,
+                fontSize: { xs: "2.4rem", sm: "3.2rem" },
+                lineHeight: 1.05,
+                fontWeight: 400,
+              }}
+            >
+              Presentes emocionais
+            </Typography>
+            <Typography sx={{ fontFamily: "var(--font-slab)", fontSize: "0.72rem", letterSpacing: 2.5, textTransform: "uppercase", color: palette.sage }}>
+              Nossa lista especial
+            </Typography>
+          </Box>
+        </Box>
+      </Portal>
     );
   }
 

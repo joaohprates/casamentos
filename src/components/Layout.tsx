@@ -210,7 +210,7 @@ export function Layout() {
           </div>
 
           <div style={{ display: tipo === "presente" ? "block" : "none", width: "100%", maxWidth: 720, marginInline: "auto" }}>
-            <GiftsSection />
+            <GiftsSection active={tipo === "presente"} onExit={() => setTipo(null)} />
           </div>
 
           <div style={{ display: tipo === "rsvp" ? "block" : "none", width: "100%", maxWidth: 720, marginInline: "auto" }}>
