@@ -34,67 +34,33 @@ interface PixData {
 }
 
 const gifts: Gift[] = [
-  // Aparelhos de jantar
-  { id: 1, name: "Aparelho de Jantar e Chá Orgânico", image: "", price: 793.20 },
-  { id: 2, name: "Aparelho de Jantar e Chá Cerâmica", image: "", price: 299.90 },
-  { id: 3, name: "Aparelho de Jantar e Chá Porcelana", image: "", price: 679.00 },
-  // Panelas
-  { id: 4, name: "Jogo de Panela Antiaderente", image: "", price: 599.90 },
-  { id: 5, name: "Jogo de Panela Tramontina", image: "", price: 517.94 },
-  { id: 6, name: "Conjunto de Panelas Cerâmica", image: "", price: 249.99 },
-  { id: 7, name: "Panela de Pressão", image: "" },
-  // Talheres e utensílios
-  { id: 8, name: "Faqueiro 91 Peças", image: "", price: 550.99 },
-  { id: 9, name: "Faqueiro 24 Peças", image: "", price: 137.51 },
-  { id: 10, name: "Utensílios de Cozinha Silicone", image: "", price: 76.24 },
-  { id: 11, name: "Utensílios de Cozinha Silicone e Madeira", image: "", price: 154.00 },
-  { id: 12, name: "Jogo para Churrasco", image: "", price: 209.00 },
-  // Copos e xícaras
-  { id: 13, name: "Jogo de Copos de Vidro Liso", image: "", price: 49.90 },
-  { id: 14, name: "Jogo de Copos de Vidro Canelado", image: "", price: 99.00 },
-  { id: 15, name: "Jogo de Xícaras Café com Pires", image: "", price: 69.00 },
-  { id: 16, name: "Jogo de Xícaras Café Porcelana", image: "", price: 73.38 },
-  // Eletrodomésticos
-  { id: 17, name: "Liquidificador", image: "", price: 219.00 },
-  { id: 18, name: "Microondas", image: "", price: 677.97 },
-  { id: 19, name: "Air Fryer", image: "", price: 557.07 },
-  { id: 20, name: "Ferro de Passar", image: "", price: 209.90 },
-  { id: 21, name: "Aspirador de Pó", image: "", price: 380.54 },
-  { id: 22, name: "Batedeira", image: "", price: 329.00 },
-  { id: 23, name: "Máquina de Lavar", image: "", price: 2782.01 },
-  { id: 24, name: "Lava-Louças", image: "", price: 2999.00 },
-  { id: 25, name: "Fogão", image: "", price: 1226.36 },
-  { id: 26, name: "Cafeteira", image: "" },
-  { id: 27, name: "Forno Elétrico", image: "" },
-  // Acessórios
-  { id: 28, name: "Garrafa de Café", image: "" },
-  { id: 29, name: "Potes Herméticos", image: "" },
-  // Móveis
-  { id: 30, name: "Mesa de Jantar", image: "", price: 1684.46 },
-  { id: 31, name: "Sofá", image: "", price: 2700.00 },
-  { id: 32, name: "Aparador Buffet", image: "", price: 499.99 },
-  { id: 33, name: "Aparador de Sala", image: "" },
-  { id: 34, name: "Guarda-Roupa", image: "", price: 1979.99 },
-  { id: 35, name: "Cama", image: "", price: 1519.99 },
-  { id: 36, name: "Tapetes", image: "" },
+  { id: 1, name: "Vale jantar de 1 mês de casados para os noivos", image: "", price: 309.75 },
+  { id: 2, name: "Ajuda para mobiliar a casa", image: "", price: 990.99 },
+  { id: 3, name: "Primeira conta de água da casa dos recém-casados", image: "", price: 215.00 },
+  { id: 4, name: "Primeira conta de luz dos recém-casados", image: "", price: 198.00 },
+  { id: 5, name: "Vale café da tarde na casa dos noivos (90 dias pós casamento)", image: "", price: 150.00 },
+  { id: 6, name: "Cobertor pra noiva que está sempre coberta de razão", image: "", price: 320.00 },
+  { id: 7, name: "Compra do mês", image: "", price: 668.94 },
+  { id: 8, name: "Drive thru pós casamento", image: "", price: 80.00 },
+  { id: 9, name: "Vale gás para o noivo assar pão", image: "", price: 130.00 },
 ];
 
 function GiftCard({ gift, onSelect }: { gift: Gift; onSelect: () => void }) {
+  const available = gift.price != null;
   return (
     <Box
       sx={{
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        backgroundColor: palette.card,
-        border: `1px solid ${palette.divider}`,
+        backgroundColor: "rgba(255, 248, 236, 0.55)",
+        border: `1px solid ${palette.border}`,
         borderRadius: 3,
         overflow: "hidden",
         transition: "all 0.3s ease",
         cursor: "pointer",
         "&:hover": {
-          backgroundColor: palette.cardHover,
+          backgroundColor: "rgba(255, 248, 236, 0.80)",
           transform: "translateY(-4px)",
-          boxShadow: "0 12px 40px rgba(0,0,0,0.25)",
+          boxShadow: "0 12px 32px rgba(64,49,50,0.10)",
+          borderColor: palette.borderActive,
         },
       }}
       onClick={onSelect}
@@ -118,42 +84,61 @@ function GiftCard({ gift, onSelect }: { gift: Gift; onSelect: () => void }) {
 
       <Box sx={{ p: 2 }}>
         <Typography
-          sx={{ color: palette.text, fontWeight: 500, fontSize: "0.95rem", mb: 0.5 }}
+          sx={{
+            fontFamily: "var(--font-serif)",
+            color: palette.brown,
+            fontWeight: 500,
+            fontSize: "1rem",
+            mb: 0.5,
+            minHeight: "2.6em",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
         >
           {gift.name}
         </Typography>
 
         <Typography
-          sx={{ color: palette.accent, fontWeight: 600, fontSize: "1.05rem", mb: 1.5 }}
+          sx={{
+            fontFamily: "var(--font-serif)",
+            color: palette.olive,
+            fontWeight: 600,
+            fontSize: "1.1rem",
+            mb: 1.5,
+            fontStyle: "italic",
+          }}
         >
-          {gift.price != null ? `R$ ${gift.price.toFixed(2).replace(".", ",")}` : "A definir"}
+          {available ? `R$ ${gift.price!.toFixed(2).replace(".", ",")}` : "A definir"}
         </Typography>
 
         <Box
           component="button"
-          disabled={gift.price == null}
+          disabled={!available}
           sx={{
             width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             gap: 1,
-            py: 1.2,
-            border: gift.price != null ? "1px solid #43a047" : `1px solid ${palette.divider}`,
+            py: 1.1,
+            border: `1px solid ${available ? palette.olive : palette.divider}`,
             borderRadius: 2,
-            backgroundColor: gift.price != null ? "rgba(67,160,71,0.18)" : "rgba(255,255,255,0.05)",
-            color: gift.price != null ? "#7ef08b" : palette.textMuted,
-            cursor: gift.price != null ? "pointer" : "default",
-            fontSize: "0.85rem",
-            fontWeight: 600,
-            letterSpacing: 1,
+            backgroundColor: available ? palette.btnBg : "transparent",
+            color: available ? palette.olive : palette.textSubtle,
+            cursor: available ? "pointer" : "default",
+            fontFamily: "var(--font-slab)",
+            fontSize: "0.78rem",
+            fontWeight: 500,
+            letterSpacing: 1.5,
             textTransform: "uppercase",
             transition: "all 0.25s ease",
-            "&:hover": gift.price != null ? { backgroundColor: "rgba(67,160,71,0.3)" } : {},
+            "&:hover": available ? { backgroundColor: palette.btnBgHover } : {},
           }}
         >
-          <CardGiftcardRoundedIcon sx={{ fontSize: 18 }} />
-          {gift.price != null ? "Presentear" : "Em breve"}
+          <CardGiftcardRoundedIcon sx={{ fontSize: 17 }} />
+          {available ? "Presentear" : "Em breve"}
         </Box>
       </Box>
     </Box>
@@ -198,8 +183,8 @@ function PixPayment({ gift }: { gift: Gift }) {
   if (loading) {
     return (
       <Box sx={{ py: 4, display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-        <CircularProgress sx={{ color: palette.accent }} />
-        <Typography sx={{ color: palette.textMuted, fontSize: "0.9rem" }}>
+        <CircularProgress sx={{ color: palette.olive }} />
+        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.95rem", fontStyle: "italic" }}>
           Gerando QR Code Pix...
         </Typography>
       </Box>
@@ -210,16 +195,16 @@ function PixPayment({ gift }: { gift: Gift }) {
     return (
       <Box
         sx={{
-          backgroundColor: "rgba(255,80,80,0.1)",
-          border: "1px solid rgba(255,80,80,0.3)",
+          backgroundColor: palette.dangerBg,
+          border: `1px solid ${palette.danger}55`,
           borderRadius: 3,
           p: 3,
         }}
       >
-        <Typography sx={{ color: "#ff6b6b", fontSize: "0.9rem" }}>
+        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.danger, fontSize: "0.95rem" }}>
           {error}
         </Typography>
-        <Typography sx={{ color: palette.textMuted, fontSize: "0.8rem", mt: 1 }}>
+        <Typography sx={{ color: palette.textMuted, fontSize: "0.85rem", mt: 1 }}>
           Tente novamente mais tarde
         </Typography>
       </Box>
@@ -238,6 +223,7 @@ function PixPayment({ gift }: { gift: Gift }) {
           p: 2,
           display: "inline-block",
           mb: 2,
+          border: `1px solid ${palette.border}`,
         }}
       >
         <img
@@ -247,7 +233,7 @@ function PixPayment({ gift }: { gift: Gift }) {
         />
       </Box>
 
-      <Typography sx={{ color: palette.textMuted, fontSize: "0.85rem", mb: 2 }}>
+      <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.9rem", fontStyle: "italic", mb: 2 }}>
         Escaneie o QR Code com o app do seu banco
       </Typography>
 
@@ -262,7 +248,7 @@ function PixPayment({ gift }: { gift: Gift }) {
           py: 1.3,
           px: 2,
           backgroundColor: palette.btnBg,
-          border: `1px solid ${palette.accent}`,
+          border: `1px solid ${palette.olive}`,
           borderRadius: 2,
           cursor: "pointer",
           transition: "all 0.25s ease",
@@ -270,16 +256,17 @@ function PixPayment({ gift }: { gift: Gift }) {
         }}
       >
         {copied ? (
-          <CheckRoundedIcon sx={{ fontSize: 18, color: "#4caf50" }} />
+          <CheckRoundedIcon sx={{ fontSize: 18, color: palette.success }} />
         ) : (
-          <ContentCopyRoundedIcon sx={{ fontSize: 18, color: palette.accent }} />
+          <ContentCopyRoundedIcon sx={{ fontSize: 18, color: palette.olive }} />
         )}
         <Typography
           sx={{
-            color: copied ? "#4caf50" : palette.accent,
-            fontSize: "0.85rem",
-            fontWeight: 600,
-            letterSpacing: 1,
+            fontFamily: "var(--font-slab)",
+            color: copied ? palette.success : palette.olive,
+            fontSize: "0.78rem",
+            fontWeight: 500,
+            letterSpacing: 1.5,
             textTransform: "uppercase",
           }}
         >
@@ -287,7 +274,7 @@ function PixPayment({ gift }: { gift: Gift }) {
         </Typography>
       </Box>
 
-      <Typography sx={{ color: palette.textMuted, fontSize: "0.75rem", mt: 2 }}>
+      <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textSubtle, fontSize: "0.78rem", fontStyle: "italic", mt: 2 }}>
         Pagamento via Pix · Expira em 1 hora
       </Typography>
     </Box>
@@ -295,9 +282,9 @@ function PixPayment({ gift }: { gift: Gift }) {
 }
 
 const paymentOptions: { id: PaymentMethod; label: string; sub: string; icon: React.ReactNode; color: string }[] = [
-  { id: "pix", label: "Pix", sub: "QR Code · Instantâneo", icon: <PixRoundedIcon sx={{ fontSize: 28 }} />, color: "#4caf50" },
-  { id: "boleto", label: "Boleto Bancário", sub: "Vence em 3 dias úteis", icon: <ReceiptLongRoundedIcon sx={{ fontSize: 28 }} />, color: "#7EB6D9" },
-  { id: "fisica", label: "Entregar Fisicamente", sub: "No dia do casamento", icon: <RedeemRoundedIcon sx={{ fontSize: 28 }} />, color: "#e0b97a" },
+  { id: "pix", label: "Pix", sub: "QR Code · Instantâneo", icon: <PixRoundedIcon sx={{ fontSize: 26 }} />, color: palette.olive },
+  { id: "boleto", label: "Boleto Bancário", sub: "Vence em 3 dias úteis", icon: <ReceiptLongRoundedIcon sx={{ fontSize: 26 }} />, color: palette.sage },
+  { id: "fisica", label: "Entregar Fisicamente", sub: "No dia do casamento", icon: <RedeemRoundedIcon sx={{ fontSize: 26 }} />, color: palette.nude },
 ];
 
 function formatCpf(value: string) {
@@ -371,17 +358,17 @@ function BoletoPayment({ gift }: { gift: Gift }) {
   if (loading) {
     return (
       <Box sx={{ py: 4, display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-        <CircularProgress sx={{ color: "#7EB6D9" }} />
-        <Typography sx={{ color: palette.textMuted, fontSize: "0.9rem" }}>Gerando boleto...</Typography>
+        <CircularProgress sx={{ color: palette.olive }} />
+        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.95rem", fontStyle: "italic" }}>Gerando boleto...</Typography>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box sx={{ backgroundColor: "rgba(255,80,80,0.1)", border: "1px solid rgba(255,80,80,0.3)", borderRadius: 3, p: 3 }}>
-        <Typography sx={{ color: "#ff6b6b", fontSize: "0.9rem" }}>{error}</Typography>
-        <Typography sx={{ color: palette.textMuted, fontSize: "0.8rem", mt: 1 }}>Tente novamente mais tarde</Typography>
+      <Box sx={{ backgroundColor: palette.dangerBg, border: `1px solid ${palette.danger}55`, borderRadius: 3, p: 3 }}>
+        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.danger, fontSize: "0.95rem" }}>{error}</Typography>
+        <Typography sx={{ color: palette.textMuted, fontSize: "0.85rem", mt: 1 }}>Tente novamente mais tarde</Typography>
       </Box>
     );
   }
@@ -394,25 +381,25 @@ function BoletoPayment({ gift }: { gift: Gift }) {
           sx={{
             display: "flex", alignItems: "center", justifyContent: "center", gap: 1,
             py: 1.3, px: 2,
-            backgroundColor: "rgba(126,182,217,0.15)",
-            border: "1px solid #7EB6D9",
+            backgroundColor: palette.btnBg,
+            border: `1px solid ${palette.olive}`,
             borderRadius: 2, cursor: "pointer", transition: "all 0.25s ease",
-            "&:hover": { backgroundColor: "rgba(126,182,217,0.25)" },
+            "&:hover": { backgroundColor: palette.btnBgHover },
           }}
         >
-          {copied ? <CheckRoundedIcon sx={{ fontSize: 18, color: "#4caf50" }} /> : <ContentCopyRoundedIcon sx={{ fontSize: 18, color: "#7EB6D9" }} />}
-          <Typography sx={{ color: copied ? "#4caf50" : "#7EB6D9", fontSize: "0.85rem", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
+          {copied ? <CheckRoundedIcon sx={{ fontSize: 18, color: palette.success }} /> : <ContentCopyRoundedIcon sx={{ fontSize: 18, color: palette.olive }} />}
+          <Typography sx={{ fontFamily: "var(--font-slab)", color: copied ? palette.success : palette.olive, fontSize: "0.78rem", fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase" }}>
             {copied ? "Copiado!" : "Copiar código de barras"}
           </Typography>
         </Box>
         {boleto.pdfUrl && (
           <Box sx={{ mt: 2 }}>
-            <a href={boleto.pdfUrl} target="_blank" rel="noreferrer" style={{ color: "#7EB6D9", fontSize: "0.85rem" }}>
+            <a href={boleto.pdfUrl} target="_blank" rel="noreferrer" style={{ fontFamily: "var(--font-serif)", color: palette.olive, fontSize: "0.9rem", fontStyle: "italic", textDecoration: "underline" }}>
               Abrir PDF do boleto
             </a>
           </Box>
         )}
-        <Typography sx={{ color: palette.textMuted, fontSize: "0.75rem", mt: 2 }}>
+        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textSubtle, fontSize: "0.78rem", fontStyle: "italic", mt: 2 }}>
           Pagamento via boleto · Vence em 3 dias úteis
         </Typography>
       </Box>
@@ -423,20 +410,20 @@ function BoletoPayment({ gift }: { gift: Gift }) {
     width: "100%",
     py: 1.3,
     px: 2,
-    backgroundColor: "rgba(255,255,255,0.06)",
-    border: `1px solid ${hasError ? "#ff6b6b" : palette.divider}`,
+    backgroundColor: "rgba(255,255,255,0.55)",
+    border: `1px solid ${hasError ? palette.danger : palette.border}`,
     borderRadius: 2,
-    color: palette.text,
+    color: palette.brown,
     fontSize: "0.95rem",
+    fontFamily: "var(--font-serif)",
     outline: "none",
     boxSizing: "border-box",
-    fontFamily: "inherit",
-    "&:focus": { borderColor: "#7EB6D9" },
+    "&:focus": { borderColor: palette.olive },
   });
 
   return (
     <Box sx={{ textAlign: "left" }}>
-      <Typography sx={{ color: palette.textMuted, fontSize: "0.85rem", mb: 1.5 }}>
+      <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.95rem", fontStyle: "italic", mb: 1.5 }}>
         Informe seus dados para gerar o boleto
       </Typography>
 
@@ -447,7 +434,7 @@ function BoletoPayment({ gift }: { gift: Gift }) {
         placeholder="Nome completo"
         sx={inputSx(!!nomeError)}
       />
-      {nomeError && <Typography sx={{ color: "#ff6b6b", fontSize: "0.78rem", mt: 0.5 }}>{nomeError}</Typography>}
+      {nomeError && <Typography sx={{ color: palette.danger, fontSize: "0.78rem", mt: 0.5 }}>{nomeError}</Typography>}
 
       <Box
         component="input"
@@ -458,7 +445,7 @@ function BoletoPayment({ gift }: { gift: Gift }) {
         sx={{ ...inputSx(!!cpfError), mt: 1.5, letterSpacing: 2 }}
       />
       {cpfError && (
-        <Typography sx={{ color: "#ff6b6b", fontSize: "0.78rem", mt: 0.5 }}>{cpfError}</Typography>
+        <Typography sx={{ color: palette.danger, fontSize: "0.78rem", mt: 0.5 }}>{cpfError}</Typography>
       )}
       <Box
         component="button"
@@ -467,14 +454,15 @@ function BoletoPayment({ gift }: { gift: Gift }) {
           mt: 2, width: "100%",
           display: "flex", alignItems: "center", justifyContent: "center", gap: 1,
           py: 1.3,
-          border: "1px solid #7EB6D9",
+          border: `1px solid ${palette.olive}`,
           borderRadius: 2,
-          backgroundColor: "rgba(126,182,217,0.15)",
-          color: "#7EB6D9",
+          backgroundColor: palette.btnBg,
+          color: palette.olive,
           cursor: "pointer",
-          fontSize: "0.85rem", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase",
+          fontFamily: "var(--font-slab)",
+          fontSize: "0.8rem", fontWeight: 500, letterSpacing: 1.5, textTransform: "uppercase",
           transition: "all 0.25s ease",
-          "&:hover": { backgroundColor: "rgba(126,182,217,0.28)" },
+          "&:hover": { backgroundColor: palette.btnBgHover },
         }}
       >
         <ReceiptLongRoundedIcon sx={{ fontSize: 18 }} />
@@ -500,9 +488,9 @@ function GiftsSection() {
       sx={{
         maxWidth: 640,
         mx: "auto",
-        mt: 3,
+        mt: { xs: 2.5, sm: 4 },
         mb: 4,
-        px: { xs: 2, sm: 0 },
+        width: "100%",
         animation: "fadeSlideUp 0.6s ease-out",
         "@keyframes fadeSlideUp": {
           from: { opacity: 0, transform: "translateY(24px)" },
@@ -511,28 +499,39 @@ function GiftsSection() {
       }}
     >
       {/* Header */}
-      <Box sx={{ mb: 3 }}>
-        <CardGiftcardRoundedIcon sx={{ fontSize: 36, color: palette.accent, mb: 1 }} />
+      <Box sx={{ mb: { xs: 1.5, sm: 2.5 } }}>
         <Typography
-          variant="h5"
           sx={{
-            color: palette.text,
-            fontWeight: 300,
-            letterSpacing: 6,
+            fontFamily: "var(--font-slab)",
+            fontSize: "0.7rem",
+            letterSpacing: 4,
             textTransform: "uppercase",
-            fontSize: "1.1rem",
+            color: palette.sage,
+            mb: 0.5,
           }}
         >
-          Sugestão de Presentes
+          Lista de
+        </Typography>
+        <Typography
+          component="h2"
+          sx={{
+            fontFamily: "var(--font-script)",
+            color: palette.brown,
+            fontSize: { xs: "1.9rem", sm: "2.6rem" },
+            lineHeight: 1.1,
+            fontWeight: 400,
+          }}
+        >
+          Presentes
         </Typography>
         <Box
           sx={{
             width: 48,
-            height: 1.5,
-            backgroundColor: palette.accent,
+            height: 1,
+            backgroundColor: palette.olive,
             mx: "auto",
-            mt: 1.5,
-            borderRadius: 1,
+            mt: 1.2,
+            opacity: 0.5,
           }}
         />
       </Box>
@@ -556,12 +555,13 @@ function GiftsSection() {
           paper: {
             sx: {
               backgroundColor: palette.dialogBg,
-              border: `1px solid ${palette.divider}`,
+              border: `1px solid ${palette.border}`,
               borderRadius: 4,
-              color: palette.text,
+              color: palette.brown,
+              boxShadow: "0 20px 60px rgba(64,49,50,0.18)",
             },
           },
-          backdrop: { sx: { backdropFilter: "blur(6px)" } },
+          backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(64,49,50,0.30)" } },
         }}
       >
         {selected && (
@@ -575,8 +575,8 @@ function GiftsSection() {
                 ) : null}
                 {currentOption
                   ? <Box sx={{ color: currentOption.color, display: "flex" }}>{currentOption.icon}</Box>
-                  : <CardGiftcardRoundedIcon sx={{ color: palette.accent, fontSize: 22 }} />}
-                <Typography sx={{ fontWeight: 600, fontSize: "1.1rem", color: palette.text }}>
+                  : <CardGiftcardRoundedIcon sx={{ color: palette.olive, fontSize: 22 }} />}
+                <Typography sx={{ fontFamily: "var(--font-serif)", fontWeight: 500, fontSize: "1.15rem", color: palette.brown }}>
                   {currentOption ? currentOption.label : "Como deseja presentear?"}
                 </Typography>
               </Box>
@@ -592,10 +592,10 @@ function GiftsSection() {
                 </Box>
               )}
 
-              <Typography sx={{ fontWeight: 600, fontSize: "1.1rem", mb: 0.5 }}>
+              <Typography sx={{ fontFamily: "var(--font-serif)", fontWeight: 500, fontSize: "1.15rem", color: palette.brown, mb: 0.5 }}>
                 {selected.name}
               </Typography>
-              <Typography sx={{ color: palette.accent, fontWeight: 700, fontSize: "1.3rem", mb: 3 }}>
+              <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.olive, fontWeight: 600, fontSize: "1.35rem", fontStyle: "italic", mb: 3 }}>
                 {selected.price != null ? `R$ ${selected.price.toFixed(2).replace(".", ",")}` : "A definir"}
               </Typography>
 
@@ -609,18 +609,18 @@ function GiftsSection() {
                       sx={{
                         display: "flex", alignItems: "center", gap: 2,
                         p: 2, borderRadius: 3, textAlign: "left",
-                        border: `1px solid ${selected.price != null ? `${opt.color}55` : palette.divider}`,
-                        backgroundColor: selected.price != null ? `${opt.color}12` : "rgba(255,255,255,0.03)",
+                        border: `1px solid ${selected.price != null ? `${opt.color}66` : palette.divider}`,
+                        backgroundColor: selected.price != null ? `${opt.color}14` : "transparent",
                         cursor: selected.price != null ? "pointer" : "default",
                         opacity: selected.price != null ? 1 : 0.45,
                         transition: "all 0.2s ease",
-                        "&:hover": selected.price != null ? { backgroundColor: `${opt.color}22`, transform: "translateX(3px)" } : {},
+                        "&:hover": selected.price != null ? { backgroundColor: `${opt.color}24`, transform: "translateX(3px)" } : {},
                       }}
                     >
                       <Box sx={{ color: opt.color, display: "flex", flexShrink: 0 }}>{opt.icon}</Box>
                       <Box>
-                        <Typography sx={{ color: palette.text, fontWeight: 600, fontSize: "0.95rem" }}>{opt.label}</Typography>
-                        <Typography sx={{ color: palette.textMuted, fontSize: "0.78rem" }}>{opt.sub}</Typography>
+                        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.brown, fontWeight: 500, fontSize: "1rem" }}>{opt.label}</Typography>
+                        <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.82rem", fontStyle: "italic" }}>{opt.sub}</Typography>
                       </Box>
                     </Box>
                   ))}
@@ -635,14 +635,14 @@ function GiftsSection() {
 
               {/* Entregar fisicamente */}
               {paymentMethod === "fisica" && (
-                <Box sx={{ backgroundColor: "rgba(224,185,122,0.1)", border: "1px solid rgba(224,185,122,0.3)", borderRadius: 3, p: 3 }}>
-                  <RedeemRoundedIcon sx={{ fontSize: 40, color: "#e0b97a", mb: 1.5 }} />
-                  <Typography sx={{ color: palette.text, fontWeight: 600, fontSize: "1rem", mb: 1 }}>
+                <Box sx={{ backgroundColor: `${palette.nude}22`, border: `1px solid ${palette.nude}66`, borderRadius: 3, p: 3 }}>
+                  <RedeemRoundedIcon sx={{ fontSize: 40, color: palette.nude, mb: 1.5 }} />
+                  <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.brown, fontWeight: 500, fontSize: "1.1rem", mb: 1 }}>
                     Que gentileza!
                   </Typography>
-                  <Typography sx={{ color: palette.textMuted, fontSize: "0.88rem", lineHeight: 1.6 }}>
+                  <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.95rem", lineHeight: 1.6 }}>
                     Você pode entregar o presente pessoalmente no dia do casamento,{" "}
-                    <strong style={{ color: palette.text }}>8 de novembro em Maringá</strong>.
+                    <strong style={{ color: palette.brown }}>08 de novembro em Iguatemi-PR</strong>.
                   </Typography>
                 </Box>
               )}

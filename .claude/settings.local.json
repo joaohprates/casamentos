@@ -19,7 +19,17 @@
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3001 -State Listen | Select-Object -ExpandProperty OwningProcess | ForEach-Object { Stop-Process -Id $_-Force }\")",
       "Bash(xargs -I{} powershell -Command \"Stop-Process -Id {} -Force\")",
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3001 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | Where-Object { $_-gt 0 } | ForEach-Object { Stop-Process -Id $_-Force -ErrorAction SilentlyContinue }\")",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(npm ls *)",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(npx --no-install puppeteer --version)",
+      "Bash(npx playwright *)",
+      "Bash(node *)",
+      "Bash(grep -oE \"<path[^>]{0,200}\" logo-hq-raw.svg)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

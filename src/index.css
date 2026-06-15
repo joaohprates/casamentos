@@ -1,52 +1,60 @@
+/* Fontes da identidade visual — Islainy & Jônatas
+   - Cormorant Garamond: títulos serif elegantes
+   - Josefin Slab: detalhes / labels
+   - Allura: script romântica (substituto Google Fonts para Westonia) */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Josefin+Slab:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Allura&family=Pinyon+Script&display=swap");
+
+/* Reset universal — sem isso, width:100% + padding extrapola o viewport
+   (era o bug raiz do "lado direito cortado" no mobile) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
+  /* Paleta */
+  --color-brown: #403132;
+  --color-olive-dark: #4e4c34;
+  --color-olive: #75714e;
+  --color-sage: #898e7c;
+  --color-nude: #cbbbae;
+  --color-cream: #fff8ec;
+  --color-lavender: #b8bfd7;
+  --color-paper: #dbdbdb;
+
+  --text: var(--color-brown);
+  --text-muted: rgba(64, 49, 50, 0.62);
+  --bg: var(--color-cream);
+  --border: rgba(137, 142, 124, 0.32);
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    rgba(64, 49, 50, 0.08) 0 10px 30px -8px,
+    rgba(64, 49, 50, 0.05) 0 4px 10px -3px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Tipografia */
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-slab: "Josefin Slab", Georgia, serif;
+  --font-script: "Allura", "Pinyon Script", "Snell Roundhand", cursive;
+  --font-sans: "Josefin Slab", system-ui, "Segoe UI", Roboto, sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font: 17px/150% var(--font-sans);
+  letter-spacing: 0.1px;
+  color-scheme: light;
   color: var(--text);
+  /* Fallback creme caso o vídeo não carregue — não cobre o vídeo porque
+     fica no canvas (html), e o vídeo pinta acima via z-index. */
   background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+html {
+  background: var(--color-cream);
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+@media (max-width: 1024px) {
+  :root {
+    font-size: 15.5px;
   }
 }
 
@@ -64,62 +72,56 @@
 
 body {
   margin: 0;
+  /* Sem background aqui: deixa o vídeo (z-index -2) aparecer.
+     Fallback creme fica no html acima. */
 }
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: -1;
-}
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+
+/* Tipografia base */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 24px 0;
+  font-weight: 300;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+  font-size: clamp(22px, 3.4vw, 32px);
+  line-height: 1.2;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-weight: 400;
 }
+
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.font-script {
+  font-family: var(--font-script);
+  letter-spacing: 0;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.font-serif {
+  font-family: var(--font-serif);
 }
+
+.font-slab {
+  font-family: var(--font-slab);
+}
+
+/* Layout principal */
 .layout-root {
   position: relative;
   min-height: 100vh;
 }
 
+/* Vídeo de fundo — sem filtros caros por frame (deixa o overlay creme
+   fazer o trabalho de harmonizar com a paleta) */
 .video-bg {
   position: fixed;
   inset: 0;
@@ -127,31 +129,42 @@ code {
   height: 100%;
   object-fit: cover;
   z-index: -2;
+  filter: saturate(0.85);
+  /* Promove pra própria camada GPU pra não compartilhar repaint com o resto */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-.layout-root::after {
+.layout-root::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  /* Overlay creme bem suave — a coluna de vidro fosco no centro garante a
+     legibilidade; o overlay só dá um wash quente sutil no vídeo das laterais. */
+  background: rgba(255, 248, 236, 0.15);
   z-index: -1;
+  pointer-events: none;
 }
 
 .layout-center {
   position: relative;
   z-index: 1;
-
-  min-height: 100vh;
-
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
   text-align: center;
-  padding: 24px 0 40px;
   box-sizing: border-box;
 }
+
+
 .section-container {
   min-height: 400px;
+}
+
+/* Inputs em fundo claro — placeholder com contraste suficiente */
+.MuiInputBase-input::placeholder,
+.MuiOutlinedInput-input::placeholder {
+  color: rgba(64, 49, 50, 0.45);
+  opacity: 1;
 }

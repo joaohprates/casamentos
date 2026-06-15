@@ -24,3 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 src/assets/viideo.mp4
+
+# Tooling / crash dumps
+erl_crash.dump
+shazam.yaml
+.shazam/
+.claude/worktrees/

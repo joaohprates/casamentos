@@ -14,10 +14,10 @@ import palette from "../palette";
 
 const GOOGLE_CALENDAR_URL =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-  "&text=Casamento+Allan%27De" +
-  "&dates=20261108T160000/20261108T230000" +
-  "&location=Maring%C3%A1+%E2%80%93+PR" +
-  "&details=Casamento+Allan%27De+%E2%80%A2+Maring%C3%A1";
+  "&text=Casamento+Islainy+%26+J%C3%B4natas" +
+  "&dates=20261108T193000Z/20261109T020000Z" + // 16h30 BRT → UTC
+  "&location=Allan%27De+-+Iguatemi%2C+PR" +
+  "&details=Casamento+Islainy+%26+J%C3%B4natas+%E2%80%A2+Allan%27De+%E2%80%A2+Iguatemi-PR";
 
 type TokenStatus = "idle" | "validating" | "valid" | "invalid" | "used";
 
@@ -104,16 +104,18 @@ function RSVPSection() {
 
   const inputSx = {
     "& .MuiOutlinedInput-root": {
-      color: palette.text,
-      backgroundColor: "rgba(255,255,255,0.06)",
+      color: palette.brown,
+      backgroundColor: "rgba(255,255,255,0.55)",
       borderRadius: 2,
+      fontFamily: "var(--font-serif)",
       "& fieldset": { borderColor: palette.border },
-      "&:hover fieldset": { borderColor: palette.accent },
-      "&.Mui-focused fieldset": { borderColor: palette.accent },
+      "&:hover fieldset": { borderColor: palette.olive },
+      "&.Mui-focused fieldset": { borderColor: palette.olive },
     },
     "& .MuiInputLabel-root": {
       color: palette.textMuted,
-      "&.Mui-focused": { color: palette.accent },
+      fontFamily: "var(--font-slab)",
+      "&.Mui-focused": { color: palette.olive },
     },
   };
 
@@ -122,9 +124,9 @@ function RSVPSection() {
       sx={{
         maxWidth: 480,
         mx: "auto",
-        mt: 3,
+        mt: { xs: 2.5, sm: 4 },
         mb: 4,
-        px: { xs: 2, sm: 0 },
+        width: "100%",
         animation: "fadeSlideUp 0.6s ease-out",
         "@keyframes fadeSlideUp": {
           from: { opacity: 0, transform: "translateY(24px)" },
@@ -133,28 +135,39 @@ function RSVPSection() {
       }}
     >
       {/* Header */}
-      <Box sx={{ mb: 3 }}>
-        <HowToRegRoundedIcon sx={{ fontSize: 36, color: palette.accent, mb: 1 }} />
+      <Box sx={{ mb: { xs: 1.5, sm: 2.5 } }}>
         <Typography
-          variant="h5"
           sx={{
-            color: palette.text,
-            fontWeight: 300,
-            letterSpacing: 6,
+            fontFamily: "var(--font-slab)",
+            fontSize: "0.7rem",
+            letterSpacing: 4,
             textTransform: "uppercase",
-            fontSize: "1.1rem",
+            color: palette.sage,
+            mb: 0.5,
           }}
         >
-          Confirmar Presença
+          Sua
+        </Typography>
+        <Typography
+          component="h2"
+          sx={{
+            fontFamily: "var(--font-script)",
+            color: palette.brown,
+            fontSize: { xs: "1.9rem", sm: "2.6rem" },
+            lineHeight: 1.1,
+            fontWeight: 400,
+          }}
+        >
+          Confirmação
         </Typography>
         <Box
           sx={{
             width: 48,
-            height: 1.5,
-            backgroundColor: palette.accent,
+            height: 1,
+            backgroundColor: palette.olive,
             mx: "auto",
-            mt: 1.5,
-            borderRadius: 1,
+            mt: 1.2,
+            opacity: 0.5,
           }}
         />
       </Box>
@@ -162,31 +175,39 @@ function RSVPSection() {
       {/* Card */}
       <Box
         sx={{
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          backgroundColor: palette.card,
-          border: `1px solid ${palette.divider}`,
-          borderRadius: 4,
+          backgroundColor: "rgba(255, 248, 236, 0.55)",
+          border: `1px solid ${palette.border}`,
+          borderRadius: 3,
           px: { xs: 2.5, sm: 4 },
           py: 3,
           transition: "all 0.3s ease",
-          "&:hover": {
-            backgroundColor: palette.cardHover,
-            boxShadow: "0 12px 40px rgba(0,0,0,0.25)",
-          },
         }}
       >
         {success ? (
           <Box sx={{ textAlign: "center", py: 2 }}>
             <CheckCircleOutlineRoundedIcon
-              sx={{ fontSize: 56, color: "#4caf50", mb: 2 }}
+              sx={{ fontSize: 56, color: palette.success, mb: 2 }}
             />
             <Typography
-              sx={{ color: palette.text, fontSize: "1.1rem", fontWeight: 500, mb: 1 }}
+              sx={{
+                fontFamily: "var(--font-script)",
+                color: palette.brown,
+                fontSize: "2.2rem",
+                lineHeight: 1.1,
+                mb: 1,
+              }}
             >
               Presença confirmada!
             </Typography>
-            <Typography sx={{ color: palette.textMuted, fontSize: "0.9rem", mb: 3 }}>
+            <Typography
+              sx={{
+                fontFamily: "var(--font-serif)",
+                color: palette.textMuted,
+                fontSize: "1rem",
+                fontStyle: "italic",
+                mb: 3,
+              }}
+            >
               Obrigado, {name}! Nos vemos lá.
             </Typography>
 
@@ -202,7 +223,7 @@ function RSVPSection() {
                 px: 3,
                 py: 1.3,
                 backgroundColor: palette.btnBg,
-                border: `1px solid ${palette.accent}`,
+                border: `1px solid ${palette.olive}`,
                 borderRadius: 2,
                 cursor: "pointer",
                 textDecoration: "none",
@@ -210,13 +231,14 @@ function RSVPSection() {
                 "&:hover": { backgroundColor: palette.btnBgHover },
               }}
             >
-              <CalendarMonthRoundedIcon sx={{ fontSize: 18, color: palette.accent }} />
+              <CalendarMonthRoundedIcon sx={{ fontSize: 18, color: palette.olive }} />
               <Typography
                 sx={{
-                  color: palette.accent,
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  letterSpacing: 1,
+                  fontFamily: "var(--font-slab)",
+                  color: palette.olive,
+                  fontSize: "0.78rem",
+                  fontWeight: 500,
+                  letterSpacing: 1.5,
                   textTransform: "uppercase",
                 }}
               >
@@ -250,24 +272,25 @@ function RSVPSection() {
                     px: 2,
                     borderRadius: 2,
                     border: `1px solid ${palette.border}`,
-                    backgroundColor: "rgba(255,255,255,0.06)",
+                    backgroundColor: "rgba(255,255,255,0.55)",
                     color: palette.textMuted,
                     cursor: "pointer",
                     flexShrink: 0,
-                    fontSize: "0.8rem",
-                    fontWeight: 600,
-                    letterSpacing: 0.5,
+                    fontFamily: "var(--font-slab)",
+                    fontSize: "0.78rem",
+                    fontWeight: 500,
+                    letterSpacing: 1,
                     textTransform: "uppercase",
                     transition: "all 0.2s ease",
                     "&:hover:not(:disabled)": {
-                      borderColor: palette.accent,
-                      color: palette.accent,
+                      borderColor: palette.olive,
+                      color: palette.olive,
                     },
                     "&:disabled": { opacity: 0.4, cursor: "not-allowed" },
                   }}
                 >
                   {tokenStatus === "validating" ? (
-                    <CircularProgress size={14} sx={{ color: palette.accent }} />
+                    <CircularProgress size={14} sx={{ color: palette.olive }} />
                   ) : (
                     "OK"
                   )}
@@ -281,19 +304,19 @@ function RSVPSection() {
                     mt: 1.5,
                     p: 1.5,
                     borderRadius: 2,
-                    backgroundColor: "rgba(76,175,80,0.1)",
-                    border: "1px solid rgba(76,175,80,0.3)",
+                    backgroundColor: palette.successBg,
+                    border: `1px solid ${palette.success}55`,
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
                   }}
                 >
-                  <PeopleRoundedIcon sx={{ fontSize: 18, color: "#4caf50" }} />
+                  <PeopleRoundedIcon sx={{ fontSize: 18, color: palette.success }} />
                   <Box>
-                    <Typography sx={{ color: "#4caf50", fontSize: "0.88rem", fontWeight: 600 }}>
+                    <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.success, fontSize: "0.95rem", fontWeight: 500 }}>
                       {familia || "Convite válido"}
                     </Typography>
-                    <Typography sx={{ color: palette.textMuted, fontSize: "0.8rem" }}>
+                    <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.textMuted, fontSize: "0.85rem", fontStyle: "italic" }}>
                       {adultos} {adultos === 1 ? "adulto" : "adultos"} confirmado{adultos === 1 ? "" : "s"} por este convite
                     </Typography>
                   </Box>
@@ -306,22 +329,22 @@ function RSVPSection() {
                     mt: 1.5,
                     p: 1.5,
                     borderRadius: 2,
-                    backgroundColor: "rgba(255,152,0,0.1)",
-                    border: "1px solid rgba(255,152,0,0.3)",
+                    backgroundColor: palette.warningBg,
+                    border: `1px solid ${palette.warning}55`,
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
                   }}
                 >
-                  <ErrorOutlineRoundedIcon sx={{ fontSize: 18, color: "#ff9800" }} />
-                  <Typography sx={{ color: "#ff9800", fontSize: "0.88rem" }}>
+                  <ErrorOutlineRoundedIcon sx={{ fontSize: 18, color: palette.warning }} />
+                  <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.warning, fontSize: "0.95rem" }}>
                     Este convite já foi confirmado
                   </Typography>
                 </Box>
               )}
 
               {tokenStatus === "invalid" && (
-                <Typography sx={{ color: "#ff6b6b", fontSize: "0.82rem", mt: 1 }}>
+                <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.danger, fontSize: "0.88rem", fontStyle: "italic", mt: 1 }}>
                   Código não encontrado. Verifique o convite e tente novamente.
                 </Typography>
               )}
@@ -362,12 +385,12 @@ function RSVPSection() {
                   }}
                   sx={{
                     ...inputSx,
-                    "& .MuiFormHelperText-root": { color: palette.textMuted },
+                    "& .MuiFormHelperText-root": { color: palette.textMuted, fontFamily: "var(--font-serif)", fontStyle: "italic" },
                   }}
                 />
 
                 {error && (
-                  <Typography sx={{ color: "#ff6b6b", fontSize: "0.85rem" }}>
+                  <Typography sx={{ fontFamily: "var(--font-serif)", color: palette.danger, fontSize: "0.9rem", fontStyle: "italic" }}>
                     {error}
                   </Typography>
                 )}
@@ -382,14 +405,15 @@ function RSVPSection() {
                     justifyContent: "center",
                     gap: 1,
                     py: 1.3,
-                    border: `1px solid ${palette.accent}`,
+                    border: `1px solid ${palette.olive}`,
                     borderRadius: 2,
                     backgroundColor: palette.btnBg,
-                    color: palette.accent,
+                    color: palette.olive,
                     cursor: loading ? "wait" : "pointer",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    letterSpacing: 1,
+                    fontFamily: "var(--font-slab)",
+                    fontSize: "0.8rem",
+                    fontWeight: 500,
+                    letterSpacing: 1.5,
                     textTransform: "uppercase",
                     transition: "all 0.25s ease",
                     opacity: !name.trim() || !email.trim() ? 0.5 : 1,
@@ -397,7 +421,7 @@ function RSVPSection() {
                   }}
                 >
                   {loading ? (
-                    <CircularProgress size={18} sx={{ color: palette.accent }} />
+                    <CircularProgress size={18} sx={{ color: palette.olive }} />
                   ) : (
                     <>
                       <HowToRegRoundedIcon sx={{ fontSize: 18 }} />
