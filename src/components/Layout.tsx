@@ -81,10 +81,11 @@ export function Layout() {
             backdropFilter: "blur(10px)",
             WebkitBackdropFilter: "blur(10px)",
             backgroundColor: "rgba(255, 248, 236, 0.85)",
-            borderLeft: { xs: "none", sm: `1px solid ${palette.border}` },
-            borderRight: { xs: "none", sm: `1px solid ${palette.border}` },
             borderRadius: 0,
-            width: { xs: "100%", sm: "min(720px, 92vw)" },
+            /* Papel inteiro: cobre a tela toda (full-bleed), sem coluna cortada
+               nas laterais. O conteúdo interno é que fica limitado a 720px. */
+            width: "100%",
+            maxWidth: "100%",
             /* svh = small viewport height (mais consistente que vh no mobile,
                não muda quando a URL bar aparece/some) */
             minHeight: "100svh",
@@ -92,7 +93,6 @@ export function Layout() {
             px: { xs: 2.5, sm: 6 },
             pt: { xs: 2, sm: 3 },
             pb: { xs: 4, sm: 7 },
-            boxShadow: { xs: "none", sm: "0 0 60px rgba(64,49,50,0.08)" },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -205,15 +205,15 @@ export function Layout() {
           {/* Espaçador inferior — mesma lógica: sempre montado, flex condicional */}
           <Box sx={{ flex: tipo === null ? 1 : 0, minHeight: 0, width: "100%" }} />
 
-          <div style={{ display: tipo === "info" ? "block" : "none", width: "100%" }}>
+          <div style={{ display: tipo === "info" ? "block" : "none", width: "100%", maxWidth: 720, marginInline: "auto" }}>
             <InfoSection />
           </div>
 
-          <div style={{ display: tipo === "presente" ? "block" : "none", width: "100%" }}>
+          <div style={{ display: tipo === "presente" ? "block" : "none", width: "100%", maxWidth: 720, marginInline: "auto" }}>
             <GiftsSection />
           </div>
 
-          <div style={{ display: tipo === "rsvp" ? "block" : "none", width: "100%" }}>
+          <div style={{ display: tipo === "rsvp" ? "block" : "none", width: "100%", maxWidth: 720, marginInline: "auto" }}>
             <RSVPSection />
           </div>
         </Box>
