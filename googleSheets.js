@@ -28,6 +28,16 @@ function getConvitesTab() {
   return process.env.GOOGLE_CONVITES_TAB_NAME || "Convites";
 }
 
+// Normaliza o código do convite: ignora maiúsculas/minúsculas, acentos e
+// espaços nas bordas, para que a comparação seja tolerante.
+function normalizeToken(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .trim()
+    .toLowerCase();
+}
+
 export async function validateToken(token) {
   const sheets = await getSheetsClient();
   const tab = getConvitesTab();
@@ -38,11 +48,12 @@ export async function validateToken(token) {
   });
 
   const rows = result.data.values || [];
+  const target = normalizeToken(token);
 
   // row 0 = header, skip it
   for (let i = 1; i < rows.length; i++) {
     const [rowToken, familia, adultos, confirmado] = rows[i];
-    if (rowToken === token) {
+    if (normalizeToken(rowToken) === target) {
       if (confirmado) {
         return { valid: false, reason: "already_used" };
       }
@@ -68,8 +79,9 @@ async function markTokenAsUsed(token, timestamp) {
   });
 
   const rows = result.data.values || [];
+  const target = normalizeToken(token);
   for (let i = 1; i < rows.length; i++) {
-    if (rows[i][0] === token) {
+    if (normalizeToken(rows[i][0]) === target) {
       await sheets.spreadsheets.values.update({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
         range: `${tab}!D${i + 1}`,
