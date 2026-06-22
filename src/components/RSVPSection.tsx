@@ -377,7 +377,7 @@ function RSVPSection() {
                 />
 
                 <TextField
-                  label="Celular (WhatsApp)"
+                  label="Telefone Celular"
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(formatPhone(e.target.value))}

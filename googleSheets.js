@@ -89,7 +89,7 @@ export async function saveRsvpToSheet({ token, name, phone, adultos, criancas })
     timeZone: "America/Sao_Paulo",
   });
 
-  // Columns: Token | Nome | Celular | Data | Adultos | Crianças
+  // Columns: Token | Nome | Telefone Celular | Data | Adultos | Crianças
   const row = [token, name.trim(), String(phone).trim(), timestamp, String(adultos), String(criancas)];
 
   const appendResult = await sheets.spreadsheets.values.append({
