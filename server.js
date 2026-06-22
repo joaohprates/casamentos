@@ -143,14 +143,15 @@ app.get("/api/validate-token", async (req, res) => {
 });
 
 app.post("/api/rsvp", async (req, res) => {
-  const { token, name, email, criancas } = req.body;
+  const { token, name, phone, criancas } = req.body;
 
-  if (!token || !name || !email) {
-    return res.status(400).json({ error: "Token, nome e e-mail são obrigatórios" });
+  if (!token || !name || !phone) {
+    return res.status(400).json({ error: "Token, nome e celular são obrigatórios" });
   }
 
-  if (!email.includes("@")) {
-    return res.status(400).json({ error: "E-mail inválido" });
+  const phoneDigits = String(phone).replace(/\D/g, "");
+  if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+    return res.status(400).json({ error: "Celular inválido" });
   }
 
   try {
@@ -166,7 +167,7 @@ app.post("/api/rsvp", async (req, res) => {
     const saved = await saveRsvpToSheet({
       token,
       name,
-      email,
+      phone: phoneDigits,
       adultos: tokenResult.adultos,
       criancas: Math.max(0, parseInt(criancas, 10) || 0),
     });

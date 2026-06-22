@@ -21,6 +21,14 @@ const GOOGLE_CALENDAR_URL =
 
 type TokenStatus = "idle" | "validating" | "valid" | "invalid" | "used";
 
+// Máscara de celular brasileiro: (99) 99999-9999
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 function RSVPSection() {
   const [token, setToken] = useState("");
   const [tokenStatus, setTokenStatus] = useState<TokenStatus>("idle");
@@ -28,7 +36,7 @@ function RSVPSection() {
   const [adultos, setAdultos] = useState(0);
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [criancas, setCriancas] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -66,7 +74,13 @@ function RSVPSection() {
   };
 
   const handleSubmit = async () => {
-    if (!name.trim() || !email.trim() || tokenStatus !== "valid") return;
+    if (!name.trim() || !phone.trim() || tokenStatus !== "valid") return;
+
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      setError("Celular inválido. Informe DDD + número.");
+      return;
+    }
 
     const criancasCount = criancas.trim() === "" ? 0 : parseInt(criancas.trim(), 10);
     if (!Number.isFinite(criancasCount) || criancasCount < 0) {
@@ -84,7 +98,7 @@ function RSVPSection() {
         body: JSON.stringify({
           token: token.trim(),
           name: name.trim(),
-          email: email.trim(),
+          phone: phoneDigits,
           criancas: criancasCount,
         }),
       });
@@ -363,12 +377,15 @@ function RSVPSection() {
                 />
 
                 <TextField
-                  label="E-mail"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  label="Celular (WhatsApp)"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(formatPhone(e.target.value))}
                   fullWidth
                   size="small"
+                  slotProps={{
+                    htmlInput: { inputMode: "tel" },
+                  }}
                   sx={inputSx}
                 />
 
@@ -398,7 +415,7 @@ function RSVPSection() {
                 <Box
                   component="button"
                   onClick={handleSubmit}
-                  disabled={loading || !name.trim() || !email.trim()}
+                  disabled={loading || !name.trim() || !phone.trim()}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -416,7 +433,7 @@ function RSVPSection() {
                     letterSpacing: 1.5,
                     textTransform: "uppercase",
                     transition: "all 0.25s ease",
-                    opacity: !name.trim() || !email.trim() ? 0.5 : 1,
+                    opacity: !name.trim() || !phone.trim() ? 0.5 : 1,
                     "&:hover:not(:disabled)": { backgroundColor: palette.btnBgHover },
                   }}
                 >

@@ -81,7 +81,7 @@ async function markTokenAsUsed(token, timestamp) {
   }
 }
 
-export async function saveRsvpToSheet({ token, name, email, adultos, criancas }) {
+export async function saveRsvpToSheet({ token, name, phone, adultos, criancas }) {
   const sheets = await getSheetsClient();
   const sheetTitle = await getConfirmacoesTab(sheets);
 
@@ -89,8 +89,8 @@ export async function saveRsvpToSheet({ token, name, email, adultos, criancas })
     timeZone: "America/Sao_Paulo",
   });
 
-  // Columns: Token | Nome | Email | Data | Adultos | Crianças
-  const row = [token, name.trim(), email.trim(), timestamp, String(adultos), String(criancas)];
+  // Columns: Token | Nome | Celular | Data | Adultos | Crianças
+  const row = [token, name.trim(), String(phone).trim(), timestamp, String(adultos), String(criancas)];
 
   const appendResult = await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
